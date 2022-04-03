@@ -178,6 +178,10 @@ pybind11_add_module(_rclpy_pybind11 SHARED
   src/rclpy/utils.cpp
   src/rclpy/wait_set.cpp
 )
+set_target_properties(_rclpy_pybind11 PROPERTIES PREFIX "")
+if(WIN32)
+  set_target_properties(_rclpy_pybind11 PROPERTIES SUFFIX ".pyd")
+endif()
 target_include_directories(_rclpy_pybind11 PRIVATE
   src/rclpy/
 )
@@ -188,18 +192,24 @@ target_link_libraries(_rclpy_pybind11 PRIVATE
   rclpy_common
   rcpputils::rcpputils
   rcutils::rcutils
+  pybind11::module
 )
 configure_build_install_location(_rclpy_pybind11)
 clean_windows_flags(_rclpy_pybind11)
 
 # Signal handling library
-pybind11_add_module(_rclpy_signal_handler SHARED
+add_library(_rclpy_signal_handler MODULE
   src/rclpy/_rclpy_signal_handler.c
 )
+set_target_properties(_rclpy_signal_handler PROPERTIES PREFIX "")
+if(WIN32)
+  set_target_properties(_rclpy_signal_handler PROPERTIES SUFFIX ".pyd")
+endif()
 target_link_libraries(_rclpy_signal_handler PRIVATE
   rclpy_common
   rcl::rcl
   rcutils::rcutils
+  pybind11::module
 )
 configure_build_install_location(_rclpy_signal_handler)
 clean_windows_flags(_rclpy_signal_handler)
