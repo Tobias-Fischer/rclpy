@@ -60,7 +60,7 @@ void
 _convert_py_duration_to_rmw_time(const rcl_duration_t & duration, rmw_time_t * out_time)
 {
   out_time->sec = RCL_NS_TO_S(duration.nanoseconds);
-  out_time->nsec = duration.nanoseconds % (1000LL * 1000LL * 1000LL);
+  out_time->nsec = duration.nanoseconds % (1000L * 1000L * 1000L);
 }
 
 /// Create an rmw_qos_profile_t instance.
